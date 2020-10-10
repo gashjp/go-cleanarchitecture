@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gashjp1994/go-ca/db"
 	"github.com/gashjp1994/go-ca/model"
 	"github.com/gashjp1994/go-ca/usecase"
+	"github.com/gashjp1994/go-ca/utils"
 	"github.com/jinzhu/gorm"
 	"github.com/labstack/echo"
 )
@@ -15,12 +15,13 @@ type UserController struct {
 	UserUsecase usecase.UserUsecase // TODO: ださいかもしらん
 }
 
-func NewUserController(conn *gorm.DB) *UserController {
+func NewUserController(conn *gorm.DB, logger utils.Logger) *UserController {
 	return &UserController{
 		UserUsecase: usecase.UserUsecase{
 			UserConnection: &db.UserConnection{
 				Conn: conn,
 			},
+			Logger: logger,
 		},
 	}
 }
@@ -39,7 +40,7 @@ func (controller *UserController) Create(c echo.Context) error {
 	if err := c.Bind(&req); err != nil {
 		return err
 	}
-	log.Printf("name: %v", req)
+	controller.UserUsecase.Logger.Log("name: ", req.Name)
 
 	user := model.User{Name: req.Name, Email: req.Email}
 	id, err := controller.UserUsecase.Add(c, user)

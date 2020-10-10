@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/gashjp1994/go-ca/controllers"
+	"github.com/gashjp1994/go-ca/utils"
 
 	"github.com/gashjp1994/go-ca/db/mysql"
 	"github.com/labstack/echo"
@@ -17,6 +18,7 @@ func Setup() {
 	e.Use(middleware.Recover())
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
+	logger := utils.Logger{}
 	conn, err := mysql.Connect()
 	if err != nil {
 		e.Logger.Fatal(err.Error())
@@ -26,11 +28,11 @@ func Setup() {
 		return c.String(http.StatusOK, "Hello, World")
 	})
 	e.POST("/user", func(c echo.Context) error {
-		controller := controllers.NewUserController(conn)
+		controller := controllers.NewUserController(conn, logger)
 		return controller.Create(c)
 	})
 	e.GET("/user/showall", func(c echo.Context) error {
-		controller := controllers.NewUserController(conn)
+		controller := controllers.NewUserController(conn, logger)
 		return controller.ShowAll(c)
 	})
 	port := os.Getenv("PORT")
