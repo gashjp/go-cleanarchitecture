@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gashjp1994/go-ca/db"
@@ -35,9 +36,10 @@ func (controller *UserController) Create(c echo.Context) error {
 		}
 	)
 	req := Request{}
-	if err := c.Bind(req); err != nil {
+	if err := c.Bind(&req); err != nil {
 		return err
 	}
+	log.Printf("name: %v", req)
 
 	user := model.User{Name: req.Name, Email: req.Email}
 	id, err := controller.UserUsecase.Add(c, user)
