@@ -48,5 +48,20 @@ func (controller *UserController) Create(c echo.Context) error {
 	}
 	res := Response{UserID: id}
 	return c.JSON(http.StatusOK, res)
+}
 
+func (controller *UserController) ShowAll(c echo.Context) error {
+	type (
+		Response struct {
+			Result int          `json:"result"`
+			Users  []model.User `json:"users"`
+		}
+	)
+
+	users, err := controller.UserUsecase.FindAll(c)
+	if err != nil {
+		return err
+	}
+	res := Response{Result: http.StatusOK, Users: users}
+	return c.JSON(http.StatusOK, res)
 }

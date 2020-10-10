@@ -6,4 +6,5 @@ import (
 
 type UserInterface interface {
 	Store(model.User) (int, error)
+	FindAll() ([]model.User, error)
 }

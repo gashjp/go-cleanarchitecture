@@ -29,3 +29,20 @@ func (r *UserConnection) Store(u model.User) (int, error) {
 	}
 	return int(user.ID), nil
 }
+
+func (r *UserConnection) FindAll() ([]model.User, error) {
+	var d []model.User
+	users := []User{}
+	if err := r.Conn.Find(&users).Error; err != nil {
+		return d, err
+	}
+
+	for i := 0; i < len(users); i++ {
+		d = append(d, model.User{
+			ID:    int(users[i].ID),
+			Name:  users[i].Name,
+			Email: users[i].Email,
+		})
+	}
+	return d, nil
+}

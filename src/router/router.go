@@ -1,4 +1,4 @@
-package handler
+package router
 
 import (
 	"net/http"
@@ -28,6 +28,10 @@ func Setup() {
 	e.POST("/user", func(c echo.Context) error {
 		controller := controllers.NewUserController(conn)
 		return controller.Create(c)
+	})
+	e.GET("/user/showall", func(c echo.Context) error {
+		controller := controllers.NewUserController(conn)
+		return controller.ShowAll(c)
 	})
 	port := os.Getenv("PORT")
 	if port == "" {
