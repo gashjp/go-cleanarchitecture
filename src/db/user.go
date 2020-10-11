@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/gashjp1994/go-ca/model"
+	"github.com/gashjp1994/go-ca/model/domain"
 	"github.com/jinzhu/gorm"
 )
 
@@ -19,7 +19,7 @@ type (
 	}
 )
 
-func (r *UserConnection) Store(u model.User) (int, error) {
+func (r *UserConnection) Store(u domain.User) (int, error) {
 	user := &User{
 		Name:  u.Name,
 		Email: u.Email,
@@ -30,15 +30,15 @@ func (r *UserConnection) Store(u model.User) (int, error) {
 	return int(user.ID), nil
 }
 
-func (r *UserConnection) FindAll() ([]model.User, error) {
-	var d []model.User
+func (r *UserConnection) FindAll() ([]domain.User, error) {
+	var d []domain.User
 	users := []User{}
 	if err := r.Conn.Find(&users).Error; err != nil {
 		return d, err
 	}
 
 	for i := 0; i < len(users); i++ {
-		d = append(d, model.User{
+		d = append(d, domain.User{
 			ID:    int(users[i].ID),
 			Name:  users[i].Name,
 			Email: users[i].Email,

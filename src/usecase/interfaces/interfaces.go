@@ -1,10 +1,8 @@
 package interfaces
 
-import (
-	"github.com/gashjp1994/go-ca/model"
-)
+import "github.com/gashjp1994/go-ca/model/domain"
 
 type UserInterface interface {
-	Store(model.User) (int, error)
-	FindAll() ([]model.User, error)
+	Store(domain.User) (int, error)
+	FindAll() ([]domain.User, error)
 }

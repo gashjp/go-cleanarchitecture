@@ -19,7 +19,7 @@ type UserController struct {
 func NewUserController(conn *gorm.DB, logger utils.Logger) *UserController {
 	return &UserController{
 		UserUsecase: usecase.UserUsecase{
-			UserModel: &domain.UserModel{
+			UserModel: &model.UserModel{
 				UserDB: &db.UserConnection{
 					Conn: conn,
 				},
@@ -46,7 +46,7 @@ func (controller *UserController) Create(c echo.Context) error {
 	}
 	controller.UserUsecase.Logger.Log("name: ", req.Name)
 
-	user := model.User{Name: req.Name, Email: req.Email}
+	user := domain.User{Name: req.Name, Email: req.Email}
 	id, err := controller.UserUsecase.Add(c, user)
 	if err != nil {
 		return err
@@ -58,8 +58,8 @@ func (controller *UserController) Create(c echo.Context) error {
 func (controller *UserController) ShowAll(c echo.Context) error {
 	type (
 		Response struct {
-			Result int          `json:"result"`
-			Users  []model.User `json:"users"`
+			Result int           `json:"result"`
+			Users  []domain.User `json:"users"`
 		}
 	)
 
