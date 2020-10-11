@@ -28,3 +28,8 @@ power shellさんやおかしくないか（はまった）
 |usecase|modelの処理、バリデーション|
 |model|データの結合など|
 |db|db_instanceとのやり取り|
+
+検討
+
+- サブディレクトリ(model/domain etc)のパッケージはほかのルートディレクトリ（usecase, controller etc）で利用しないようにする？
+- interfaceとmodelパッケージとかは、外部から呼ばれるので制約としては厳しい？
