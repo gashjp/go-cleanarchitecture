@@ -18,3 +18,13 @@ power shellさんやおかしくないか（はまった）
 テスト
 - request
 - usecase
+
+階層
+
+|階層|説明|
+|:-:|:-:|
+|router|requestのルーティング|
+|controller|request,responseの処理、逐次フロー|
+|usecase|modelの処理、バリデーション|
+|model|データの結合など|
+|db|db_instanceとのやり取り|
