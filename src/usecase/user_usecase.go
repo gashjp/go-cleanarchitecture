@@ -8,16 +8,18 @@ import (
 )
 
 type UserUsecase struct {
-	UserConnection interfaces.UserInterface
-	Logger         utils.Logger
+	UserModel interfaces.UserInterface
+	Logger    utils.Logger
 }
 
 func (i *UserUsecase) Add(c echo.Context, u model.User) (int, error) {
 	i.Logger.Log("fugafugae")
-	return i.UserConnection.Store(u)
+	return i.UserModel.Store(u)
+	// return i.UserConnection.Store(u)
 }
 
 func (i *UserUsecase) FindAll(c echo.Context) ([]model.User, error) {
 	i.Logger.Log("hogehoge", "a")
-	return i.UserConnection.FindAll()
+	return i.UserModel.FindAll()
+	//return i.UserConnection.FindAll()
 }

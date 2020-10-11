@@ -5,6 +5,7 @@ import (
 
 	"github.com/gashjp1994/go-ca/db"
 	"github.com/gashjp1994/go-ca/model"
+	"github.com/gashjp1994/go-ca/model/domain"
 	"github.com/gashjp1994/go-ca/usecase"
 	"github.com/gashjp1994/go-ca/utils"
 	"github.com/jinzhu/gorm"
@@ -18,8 +19,11 @@ type UserController struct {
 func NewUserController(conn *gorm.DB, logger utils.Logger) *UserController {
 	return &UserController{
 		UserUsecase: usecase.UserUsecase{
-			UserConnection: &db.UserConnection{
-				Conn: conn,
+			UserModel: &domain.UserModel{
+				UserDB: &db.UserConnection{
+					Conn: conn,
+				},
+				Logger: logger,
 			},
 			Logger: logger,
 		},
